@@ -21,3 +21,44 @@ def multiplicative_inverse(a, mod):
         return None
     else:
         return s % mod
+
+
+def encrypt(public_key, num):
+    e, n = public_key
+    return (num ** e) % n
+
+
+def decrypt(private_key, num):
+    d, n = private_key
+    return (num ** d) % n
+
+
+def gen_key(p, q):
+    n = p * q
+    r = (p - 1) * (q - 1)
+    e = 0
+    # finds an e such that e mod r = 1
+    for i in range(2, 1000):
+        if gcd(r, i) == 1:
+            e = i
+            break
+    d = multiplicative_inverse(e, r)  # de = 1 (mod(p-1)(q-1))
+    return (e, n), (d, n)
+
+
+def main():
+    public_key, private_key = gen_key(13, 17)
+    print("Pub key", public_key)
+    print("Private key", private_key)
+
+    k = 77
+    en = encrypt(public_key, k)
+    de = decrypt(private_key, en)
+
+    print(k)
+    print(en)
+    print(de)
+
+
+if __name__ == '__main__':
+    main()
