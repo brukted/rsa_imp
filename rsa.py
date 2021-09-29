@@ -25,12 +25,12 @@ def multiplicative_inverse(a, mod):
 
 def encrypt(public_key, num):
     e, n = public_key
-    return (num ** e) % n
+    return pow(num, e, n)
 
 
 def decrypt(private_key, num):
     d, n = private_key
-    return (num ** d) % n
+    return pow(num, d, n)
 
 
 def gen_key(p, q):
@@ -48,7 +48,7 @@ def gen_key(p, q):
 
 def main():
     public_key, private_key = gen_key(13, 17)
-    print("Pub key", public_key)
+    print("Public key", public_key)
     print("Private key", private_key)
 
     k = 77
